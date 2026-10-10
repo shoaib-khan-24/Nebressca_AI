@@ -1,0 +1,5 @@
+export {default as Question} from './Question'
+export {default as Answer} from './Answer'
+export {default as Head} from './Head'
+export {default as History} from './History'
+export {default as ThemeButton} from './ThemeButton'
