@@ -9,8 +9,9 @@ function ThemeButton({setTheme}) {
           )}
           className='dark:text-white text-zinc-700 text-md border px-1 rounded-2xl dark:bg-zinc-800 bg-amber-200'
         >
+            <option  value="dark">Dark</option>
             <option  value="light">Light</option>
-            <option selected value="dark">Dark</option>
+            
         </select>
     </>
   )
