@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState , useRef , useEffect} from 'react'
 import './App.css'
-import { Answer, Question, Head, History, ThemeButton} from './components'
+import { Answer, Question, Head, History, ThemeButton, ModdleToggle} from './components'
 
 import config from './config/config'
 
@@ -17,7 +17,8 @@ function App() {
   )
   const [selectedHistory, setSelectedHistory] = useState('')
   const [loader, setLoader] = useState(false)
-  const [theme, setTheme] = useState('dark')                         //new
+  const [theme, setTheme] = useState('dark')    
+  const [mode, setMode] = useState('basic')                     
 
   //for scrolling to the new question-answer
   useEffect(() => {
@@ -35,13 +36,13 @@ function App() {
   //for re-searching the recent search
   useEffect(() =>{
     if(selectedHistory){
-      console.log(selectedHistory);
+      // console.log(selectedHistory);
       submitQuestion(selectedHistory);
     }
   }, [selectedHistory])
 
   useEffect(() => {
-    console.log(theme)
+    // console.log(theme)
     if(theme == 'dark'){
       document.documentElement.classList.add('dark')
     }else{
@@ -49,6 +50,10 @@ function App() {
     }
     
   }, [theme])
+
+  // useEffect(() => {
+  //   console.log(mode);
+  // }, [mode])
 
 
   //FUNCTION: making API request to Gemini
@@ -68,10 +73,13 @@ function App() {
       "contents": [{"parts": [{"text": questionToAsk}]}]
     }
 
+    const URL = mode === "basic" ? config.geminiUrl_basic : config.geminiUrl_advanced;
+    // console.log(URL);
+
     setLoader(true)
     try{
       let response = await fetch(
-        config.geminiUrl,
+        URL,
         {
           method: "POST",
           headers:{
@@ -95,8 +103,9 @@ function App() {
 
     }catch(error){
       console.log(error)
-
-      setResult((prev) => ([...prev, {questionToAsk , answer:"Sorry, service unavailable. Try again later!"}]))
+      const error_msg = mode === "basic" ? "Sorry, Service unavailable. Try again later!" : "Apologies, Model is experiencing high demand. Please try again later or switch to **basic mode**."
+      
+      setResult((prev) => ([...prev, {questionToAsk , answer:error_msg}]))
     }
     setQuestion('')
     setSelectedHistory('')
@@ -160,14 +169,15 @@ function App() {
           }
         </div>
         
-        <form 
-          onSubmit={(e) => {
-            e.preventDefault();
-            submitQuestion();
-          }}
-          className='dark:bg-zinc-800 bg-amber-200 w-[80%] mx-auto dark:text-zinc-200 text-zinc-700 
-                      rounded-3xl border dark:border-zinc-500 border-amber-400 flex mt-5 mb-2'
-        >
+        <div className='flex items-center gap-3'>
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitQuestion();
+            }}
+            className='dark:bg-zinc-800 bg-amber-200 w-[80%] mx-auto dark:text-zinc-200 text-zinc-700 
+                      rounded-3xl border dark:border-zinc-500 border-amber-400 mt-5 mb-2 flex flex-1 items-center'
+          >
             <input 
               type='text' 
               value={question}
@@ -179,12 +189,13 @@ function App() {
               />
             <button 
               className='text-md py-2 dark:bg-zinc-700 bg-amber-300 dark:hover:bg-zinc-600 hover:bg-amber-200 rounded-r-3xl 
-                        px-5 active:scale-90 transition-all duration-100 cursor-pointer'
-              
+                        px-5 active:scale-90 transition-all duration-100 cursor-pointer' 
             >
               Ask
             </button>
-        </form>
+         </form>
+         <ModdleToggle mode={mode} setMode={setMode}/>
+        </div>
       </div>
     </div>
     </div>
