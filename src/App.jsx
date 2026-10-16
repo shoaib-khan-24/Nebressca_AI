@@ -3,7 +3,7 @@ import { useState , useRef , useEffect} from 'react'
 import './App.css'
 import { Answer, Question, Head, History, ThemeButton, ModdleToggle} from './components'
 
-import config from './config/config'
+// import config from './config/config'
 
 function App() {
 
@@ -73,22 +73,30 @@ function App() {
       "contents": [{"parts": [{"text": questionToAsk}]}]
     }
 
-    const URL = mode === "basic" ? config.geminiUrl_basic : config.geminiUrl_advanced;
-    // console.log(URL);
-
     setLoader(true)
     try{
-      let response = await fetch(
-        URL,
-        {
-          method: "POST",
-          headers:{
-            'Content-Type': 'application/json',
-            'X-goog-api-key': config.geminiApiKey
-          },
-          body: JSON.stringify(payload)
-        }
-      )
+      // let response = await fetch(
+      //   URL,
+      //   {
+      //     method: "POST",
+      //     headers:{
+      //       'Content-Type': 'application/json',
+      //       'X-goog-api-key': config.geminiApiKey
+      //     },
+      //     body: JSON.stringify(payload)
+      //   }
+      // )
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({
+          mode,
+          payload,
+        })
+      })
 
       if(!response.ok){
         throw new Error(`HTTP error: ${response.status}`);
