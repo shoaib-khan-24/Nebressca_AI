@@ -20,7 +20,7 @@ This project demonstrates:
 
 During development, the app faced frequent Gemini service-unavailable errors, which caused only about 52% of API requests to succeed. This reduced reliability and made the chatbot feel inconsistent.
 
-To fix this, we introduced a dual-model approach using a basic model and an advanced model. This fallback strategy improved the success rate to around 92%, making the app much more stable and user-friendly.
+To fix this, dual-model approach using a basic model (gemini-3.5-flash-lite) and an advanced model (gemini-3.6-flash) was implemented. This fallback strategy improved the success rate to around 92%, making the app much more stable and user-friendly.
 
 <!-- Add the API success-rate comparison image here -->
 <img width="679" height="279" alt="Gemini-api-success-rate" src="https://github.com/user-attachments/assets/d42ff943-a980-4be2-a8a5-132922435218" />
