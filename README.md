@@ -1,106 +1,49 @@
 # Nebressca AI
 
-Nebressca AI is a lightweight AI chatbot web app built with React and Vite. It allows users to ask questions in a chat-style interface and receive responses from the Gemini API. The app also keeps a local search history and supports both dark and light themes.
+Nebressca AI is a lightweight AI chatbot web app built with React and Vite. It allows users to ask questions in a chat-style interface and receive responses from the Gemini API, with persistent chat history and a responsive UI.
 
-Live demo: https://nebressca-km4makc76-shoaib-4742.vercel.app/
+Live demo: https://nebressca-ai.vercel.app
 
 ## Overview
 
 This project demonstrates:
-- Frontend development with React
-- API integration with Google Gemini
-- Real-time chat UI
-- Local storage for user history
-- Responsive UI with Tailwind CSS
+- React frontend development
+- Gemini API integration
+- Real-time chat interactions
+- Local storage for history
+- Light/dark mode support
 - Error handling and loading states
+
+## Challenge & Solution
+
+During development, the app faced frequent Gemini service-unavailable errors, which caused only about 52% of API requests to succeed. This reduced reliability and made the chatbot feel inconsistent.
+
+To fix this, we introduced a dual-model approach using a basic model and an advanced model. This fallback strategy improved the success rate to around 92%, making the app much more stable and user-friendly.
+
+<!-- Add the API success-rate comparison image here -->
 
 ## Features
 
-- Ask questions and receive AI-generated responses
-- Chat-like interface with message history
-- Search history stored in browser localStorage
-- Reuse previous prompts from history
-- Dark/light mode toggle
-- Loading spinner while waiting for the API response
-- Graceful fallback when the AI service is unavailable
+- AI-powered chat responses
+- Persistent chat history in local storage
+- Search and reuse previous prompts
+- Light/dark mode toggle
+- Smooth, responsive interface
 
 ## Tech Stack
 
-- React 19
+- React
 - Vite
 - JavaScript
 - Tailwind CSS
-- Gemini API
-- LocalStorage for persistence
-
-## Project Structure
-
-```bash
-src/
-├── App.jsx            # Main app logic and AI request handling
-├── main.jsx           # App entry point
-├── index.css          # Global styling
-├── helper.js          # Utility/helper functions
-├── components/        # Reusable UI components
-│   ├── Answer.jsx
-│   ├── Question.jsx
-│   ├── History.jsx
-│   ├── Head.jsx
-│   ├── ThemeButton.jsx
-│   └── index.js
-├── config/
-│   └── config.js      # API config and environment variables
-└── assets/            # Static assets
-```
-
-## API Configuration
-
-This app uses the Gemini API through environment variables.
-
-Create a `.env` file in the project root:
-
-```env
-VITE_GEMINI_URL=your_gemini_endpoint
-VITE_GEMINI_API_KEY=your_api_key
-```
-
-The app reads these values from `src/config/config.js` and sends requests using the Gemini endpoint.
+- Google Gemini API
 
 ## Installation
 
-1. Clone the repository
-2. Install dependencies:
-
 ```bash
 npm install
-```
-
-3. Start the app:
-
-```bash
 npm run dev
 ```
-
-4. Open the local development URL shown in the terminal.
-
-## Scripts
-
-```bash
-npm run dev     # start the app
-npm run build   # production build
-npm run preview # preview production build
-npm run lint    # run ESLint
-```
-
-## Why This Project Is Valuable
-
-This project highlights practical frontend engineering skills:
-- API integration with external AI services
-- State management using React hooks
-- Writing reusable UI components
-- Managing asynchronous requests and app loading states
-- Building a user-friendly interface with responsive design
-- Handling real-world issues like failed API calls and user history persistence
 
 ## License
 
